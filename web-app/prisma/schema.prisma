@@ -18,3 +18,10 @@ model Post {
 
     @@index([name])
 }
+
+//User with an id, name and email as strings
+model User {
+    id    String @id @default(uuid())
+    name  String
+    email String
+}
