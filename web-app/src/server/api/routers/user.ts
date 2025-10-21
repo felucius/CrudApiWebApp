@@ -19,7 +19,7 @@ const userUpdateSchema = z.object({
 });
 
 // Creates a router. It takes an object with the functions we want to expose
-export const exampleRouter = createTRPCRouter({
+export const userRouter = createTRPCRouter({
 
     // Public procedure is a function that takes a schema and returns a function that takes a function
 
