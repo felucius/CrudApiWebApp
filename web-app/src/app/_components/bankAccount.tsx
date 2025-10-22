@@ -8,7 +8,7 @@ export default function BankAccount() {
     const [name, setName] = useState("");
     const [amount, setAmount] = useState(0);
     const [userId, setUserId] = useState("");
-    const [id, setId] = useState(0);
+    const [id, setId] = useState("");
 
     //define functions
     const fetchAllAccounts = api.bankAccount.getAll.useQuery();
@@ -34,12 +34,12 @@ export default function BankAccount() {
     const handleDeleteBankAccount = async () => {
         try{
             const result = await deleteBankAccountMutation.mutateAsync({
-                id: id
+                userId: id
             });
 
             console.log(result);
 
-            setId(0);
+            setId("");
             fetchAllAccounts.refetch();
         }
         catch(error){
@@ -92,7 +92,7 @@ export default function BankAccount() {
                 <input
                     className="mr-2 w-1/2 border border-gray-300 p-2"
                     placeholder="userId"
-                    value={userId}
+                    // value={userId}
                     onChange={(e) => setUserId(e.target.value)}
                 />
                 <input
@@ -108,6 +108,24 @@ export default function BankAccount() {
                 onClick={handleCreateBankAccount}
                 >
                 Create Bank account
+                </button>
+            </div>
+
+
+            {/* Delete bank account */}
+            <div className="mb-8">
+                <h2 className="mb-4 text-2xl font-bold">Delete bank account</h2>
+                <input
+                placeholder="Enter user id to delete"
+                className="mr-2 border border-gray-300 p-2"
+                value={id}
+                onChange={(e) => setId(e.target.value)}
+                />
+                <button
+                className="mt-2 rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+                onClick={handleDeleteBankAccount}
+                >
+                Delete bank account
                 </button>
             </div>
         </div>
