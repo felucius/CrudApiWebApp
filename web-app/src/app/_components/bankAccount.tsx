@@ -9,6 +9,7 @@ export default function BankAccount() {
     const [amount, setAmount] = useState(0);
     const [userId, setUserId] = useState("");
     const [id, setId] = useState("");
+    const [amountToUpdate, setAmountToUpdate] = useState(0);
 
     //define functions
     const fetchAllAccounts = api.bankAccount.getAll.useQuery();
@@ -16,6 +17,7 @@ export default function BankAccount() {
 
     const createBankAccountMutation = api.bankAccount.createBankAccount.useMutation();
     const deleteBankAccountMutation = api.bankAccount.deleteBankAccount.useMutation();
+    const updateBankAccountMutation = api.bankAccount.updateBankAccount.useMutation();
 
     const handleCreateBankAccount = async () => {
         try{
@@ -40,6 +42,21 @@ export default function BankAccount() {
             console.log(result);
 
             setId("");
+            fetchAllAccounts.refetch();
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
+
+    const handleUpdateBankAccount = async () => {
+        try{
+            const result = await updateBankAccountMutation.mutateAsync({
+                userId: userId,
+                amount: amountToUpdate
+            });
+
+            console.log(result);
             fetchAllAccounts.refetch();
         }
         catch(error){
@@ -111,6 +128,30 @@ export default function BankAccount() {
                 </button>
             </div>
 
+            {/* Update user bank account */}
+            <div className="mb-8">
+                <h2 className="mb-4 text-2xl font-bold">Update bank account</h2>
+                <div className="mb-4 flex">
+                <input
+                    placeholder="Enter user id to update"
+                    className="mr-2 border border-gray-300 p-2"
+                    value={id}
+                    onChange={(e) => setId(e.target.value)}
+                />
+                <input
+                    className="mr-2 w-1/2 border border-gray-300 p-2"
+                    placeholder="Name to update"
+                    value={amountToUpdate}
+                    onChange={(e) => setAmountToUpdate(Number(e.target.value))}
+                />
+                </div>
+                <button
+                className="mt-2 rounded bg-orange-500 px-4 py-2 text-white hover:bg-orange-600"
+                onClick={handleUpdateBankAccount}
+                >
+                Update bank accounts
+                </button>
+            </div>
 
             {/* Delete bank account */}
             <div className="mb-8">

@@ -46,7 +46,16 @@ export const bankAccountRouter = createTRPCRouter({
     }),
 
     // Update account
+    updateBankAccount: publicProcedure
+        .input(bankAccountSchema)
+        .mutation(async ({input, ctx}) => {
+            const updatedUser = ctx.db.bankAccount.update({
+                where: { userId: input.userId },
+                data: bankAccountSchema.parse(input),
+            })
 
+            return updatedUser;
+        }),
 
     // Delete account
     deleteBankAccount: publicProcedure
