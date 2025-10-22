@@ -50,10 +50,10 @@ export const bankAccountRouter = createTRPCRouter({
 
     // Delete account
     deleteBankAccount: publicProcedure
-        .input(idSchema)
-        .mutation(({input, ctx}) => {
-        return ctx.db.bankAccount.delete({
-            where: idSchema.parse(input)
+        .input(userIdSchema)
+        .mutation(async ({input, ctx}) => {
+        return await ctx.db.bankAccount.delete({
+            where: {userId: input.userId}
         });
     }),
 });
