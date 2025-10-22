@@ -24,19 +24,4 @@ model User {
     id              String @id @default(uuid())
     name            String
     email           String
-    bankAccounts    BankAccount[]
-}
-
-// Bank account for users that contains an id, userId, amount, status (being positive or negative)
-model BankAccount {
-    id      Int     @id @default(autoincrement())
-    userId  String  @unique
-    amount  Int
-    user  User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-    // Timestamps
-    createdAt   DateTime    @default(now())
-    updatedAt   DateTime    @updatedAt
-
-    @@index([userId])
 }
